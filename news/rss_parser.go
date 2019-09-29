@@ -19,6 +19,10 @@ func LastNews() Rss {
 	return rss
 }
 
+func NeewwwTest() {
+	fmt.Println("test")
+}
+
 type Rss struct {
 	Type string `xml:"channel>title"`
 	Items []News `xml:"channel>item"`
