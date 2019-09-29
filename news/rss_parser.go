@@ -19,7 +19,7 @@ func LastNews() Rss {
 	return rss
 }
 
-func again() {
+func cleanUp() {
 
 }
 
