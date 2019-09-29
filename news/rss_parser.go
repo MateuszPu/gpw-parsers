@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func getLastNews() Rss {
+func LastNews() Rss {
 	resp, err := http.Get("http://biznes.pap.pl/pl/rss/6639")
 	if err != nil {
 		fmt.Println("test")
