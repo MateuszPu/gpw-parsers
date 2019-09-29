@@ -5,11 +5,9 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	log "github.com/Sirupsen/logrus"
 )
 
 func getLastNews() Rss {
-	log.Infof("Getting news from")
 	resp, err := http.Get("http://biznes.pap.pl/pl/rss/6639")
 	if err != nil {
 		fmt.Println("test")
