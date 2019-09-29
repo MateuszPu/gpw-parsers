@@ -19,6 +19,10 @@ func LastNews() Rss {
 	return rss
 }
 
+func again() {
+
+}
+
 func NeewwwTest() {
 	fmt.Println("test")
 }
