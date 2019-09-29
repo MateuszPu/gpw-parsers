@@ -19,10 +19,6 @@ func LastNews() Rss {
 	return rss
 }
 
-func cleanUp() {
-
-}
-
 func NeewwwTest() {
 	fmt.Println("test")
 }
