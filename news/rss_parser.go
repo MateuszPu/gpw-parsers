@@ -20,7 +20,6 @@ func LastNews() Rss {
 }
 
 func NeewwwTest() {
-	fmt.Println("aaaa")
 	fmt.Println("test")
 }
 
