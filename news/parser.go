@@ -7,8 +7,8 @@ import (
 	"net/http"
 )
 
-func ParsLast(newsType RssType) Rss {
-	resp, err := http.Get(newsType.url())
+func ParseLast(newsType rssType) Rss {
+	resp, err := http.Get(newsType.Url())
 	if err != nil {
 		fmt.Println("test")
 	}
@@ -17,6 +17,10 @@ func ParsLast(newsType RssType) Rss {
 	var rss Rss
 	xml.Unmarshal(body, &rss)
 	return rss
+}
+
+type rssType interface {
+	Url() string
 }
 
 type Rss struct {

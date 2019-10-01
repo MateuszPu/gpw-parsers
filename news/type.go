@@ -1,14 +1,10 @@
 package news
 
-type RssType interface {
-	url() string
-}
-
 type news struct {
 	rssUrl string
 }
 
-func (n news) url() string {
+func (n news) Url() string {
 	return n.rssUrl
 }
 
