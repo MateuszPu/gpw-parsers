@@ -1,6 +1,6 @@
 package news
 
-type rssType interface {
+type RssType interface {
 	url() string
 }
 

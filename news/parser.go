@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func LastNews(newsType rssType) Rss {
+func ParsLast(newsType RssType) Rss {
 	resp, err := http.Get(newsType.url())
 	if err != nil {
 		fmt.Println("test")
