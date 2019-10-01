@@ -7,8 +7,8 @@ import (
 	"net/http"
 )
 
-func LastNews() Rss {
-	resp, err := http.Get("http://biznes.pap.pl/pl/rss/6639")
+func LastNews(newsType rssType) Rss {
+	resp, err := http.Get(newsType.url())
 	if err != nil {
 		fmt.Println("test")
 	}
@@ -17,10 +17,6 @@ func LastNews() Rss {
 	var rss Rss
 	xml.Unmarshal(body, &rss)
 	return rss
-}
-
-func NeewwwTest() {
-	fmt.Println("test")
 }
 
 type Rss struct {
