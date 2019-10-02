@@ -2,21 +2,34 @@ package news
 
 import (
 	"encoding/xml"
-	"fmt"
 	"io/ioutil"
 	"net/http"
+	logger "github.com/Sirupsen/logrus"
 )
 
-func ParseLast(newsType rssType) Rss {
-	resp, err := http.Get(newsType.Url())
-	if err != nil {
-		fmt.Println("test")
-	}
-	body, err := ioutil.ReadAll(resp.Body)
+func ParseLast(newsType rssType) (parsedNews *Rss, err error) {
+	rss := &Rss{}
+	url := newsType.Url()
+	resp, err := http.Get(url)
+	defer resp.Body.Close()
 
-	var rss Rss
-	xml.Unmarshal(body, &rss)
-	return rss
+	if err != nil {
+		logger.Fatalf("Could not open following url %s : %s", url, err)
+		return nil, err
+	}
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		logger.Fatalf("Error during reading content of url: %s", err)
+		return nil, err
+	}
+
+	err = xml.Unmarshal(body, &rss)
+	if err != nil {
+		logger.Fatalf("Error during parsing: %s", err)
+		return nil, err
+	}
+	return rss, err
 }
 
 type rssType interface {
