@@ -1,0 +1,22 @@
+<rss xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
+  <channel>
+    <title>RSS Biznes - Wyniki/ Results (PL)</title>
+    <link>http://biznes.pap.pl</link>
+    <description>RSS Biznes http://biznes.pap.pl/pl/index/</description>
+    <language>pl</language>
+    <copyright>© Polska Agencja Prasowa</copyright>
+    <ttl>15</ttl>
+    <item>
+      <title>Title first</title>
+      <link>Link first</link>
+      <content:encoded>content first</content:encoded>
+      <pubDate>Thu, 03 Oct 2019 13:56:45 GMT</pubDate>
+    </item>
+    <item>
+      <title>Title second</title>
+      <link>Link second</link>
+      <content:encoded>content second</content:encoded>
+      <pubDate>Thu, 03 Oct 2018 13:56:45 GMT</pubDate>
+    </item>
+  </channel>
+</rss>

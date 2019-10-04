@@ -1,5 +1,9 @@
 package news
 
+type rssType interface {
+	Url() string
+}
+
 type news struct {
 	rssUrl string
 }
