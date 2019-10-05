@@ -2,26 +2,38 @@ package news
 
 import (
 	"encoding/xml"
+	"io"
 	"io/ioutil"
 	"net/http"
 )
 
 func ParseLast(newsType rssType) (*Rss, error) {
-	rss := &Rss{}
 	url := newsType.Url()
+	body, err := open(url)
+	defer body.Close()
 
+	return parse(read(body, err))
+}
+
+func open(url string) (io.ReadCloser, error) {
 	resp, err := http.Get(url)
-	defer resp.Body.Close()
 	if err != nil {
 		return nil, err
 	}
+	return resp.Body, err
+}
 
-	body, err := ioutil.ReadAll(resp.Body)
+func read(body io.ReadCloser, err error) ([]byte, error) {
+	content, err := ioutil.ReadAll(body)
 	if err != nil {
 		return nil, err
 	}
-	err = xml.Unmarshal(body, &rss)
+	return content, err
+}
 
+func parse(content []byte, err error) (*Rss, error) {
+	rss := &Rss{}
+	err = xml.Unmarshal(content, &rss)
 	return rss, err
 }
 
