@@ -13,21 +13,21 @@ type newsAssertion struct {
 
 func (assertion newsAssertion) hasTitle(title string) newsAssertion {
 	if assertion.news.Title != title {
-		assertion.testing.Errorf("Wrong title for news %s != %s", assertion.news.Title, title)
+		assertion.testing.Errorf("Wrong title for news expected %s to be %s", assertion.news.Title, title)
 	}
 	return assertion
 }
 
 func (assertion newsAssertion) hasLink(link string) newsAssertion{
 	if assertion.news.Link != link {
-		assertion.testing.Errorf("Wrong link for news %s != %s", assertion.news.Link, link)
+		assertion.testing.Errorf("Wrong link for news expected %s to be %s", assertion.news.Link, link)
 	}
 	return assertion
 }
 
 func (assertion newsAssertion) hasContent(content string) newsAssertion {
 	if assertion.news.Content != content {
-		assertion.testing.Errorf("Wrong content for news %s != %s", assertion.news.Content, content)
+		assertion.testing.Errorf("Wrong content for news expected %s to be %s", assertion.news.Content, content)
 	}
 	return assertion
 }
