@@ -7,21 +7,21 @@ import (
 	"testing"
 )
 
-func TestParseLastWithR(testing *testing.T) {
+func TestParsingForRealRssChannels(testing *testing.T) {
 	//given
 	sources := [...]rssType{Results(), Challenge(), Recommendations(), Ebi(), Espi(), Info()}
 
 	for _, value := range sources {
 		parsedNews, err := ParseLast(value)
 		if err != nil || parsedNews == nil {
-			testing.Errorf("Ups something was wrong %s", err)
+			testing.Errorf("Ups something was wrong to get news from real service %s", err)
 		}
 	}
 }
 
-func TestParseLast(testing *testing.T) {
+func TestParsingForMockRssChannel(testing *testing.T) {
 	//given
-	server, rssSource := mockRssServer("rss_response")
+	server, rssSource := mockRssServer("rss_response.xml")
 	defer server.Close()
 
 	//when
