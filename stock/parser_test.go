@@ -13,7 +13,7 @@ func TestParseLast(testing *testing.T) {
 	defer server.Close()
 
 	//when
-	stocks, err := ParseLast(server.URL)
+	stocks, err := ParseTodayStocks(server.URL)
 
 	//then
 	if err != nil || len(stocks) == 0 {
@@ -23,6 +23,14 @@ func TestParseLast(testing *testing.T) {
 	assertThat(stocks[1], testing).hasTicker("08N").hasName("08OCTAVA").hasPrice("0.860")
 	assertThat(stocks[2], testing).hasTicker("11B").hasName("11BIT").hasPrice("384.0")
 	assertThat(stocks[99], testing).hasTicker("DCR").hasName("DECORA").hasPrice("17.50")
+}
+
+func BenchmarkParseLast(b *testing.B) {
+	server := mockRssServer("stock_response.html")
+	defer server.Close()
+	for i:=0; i < b.N; i++ {
+		_, _ = ParseTodayStocks(server.URL)
+	}
 }
 
 func mockRssServer(path string) (*httptest.Server) {

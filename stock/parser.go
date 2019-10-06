@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func ParseLast(url string) ([]Stock, error) {
+func ParseTodayStocks(url string) ([]Stock, error) {
 	var stocks []Stock
 	content, err := open(url)
 	if err != nil {
