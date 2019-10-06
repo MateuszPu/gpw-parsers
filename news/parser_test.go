@@ -34,6 +34,14 @@ func TestParsingForMockRssChannel(testing *testing.T) {
 	assertThat(parsedNews.Items[0], testing).hasTitle("Title first").hasLink("Link first").hasContent("content first").hasDate("Thu, 03 Oct 2019 13:56:45 GMT")
 }
 
+func BenchmarkParseLast(b *testing.B) {
+	server, rssSource := mockRssServer("rss_response.xml")
+	defer server.Close()
+	for i:=0; i < b.N; i++ {
+		_, _ = ParseLast(rssSource)
+	}
+}
+
 func mockRssServer(path string) (*httptest.Server, rssSource) {
 	bytes, _ := ioutil.ReadFile(path)
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
