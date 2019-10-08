@@ -13,7 +13,7 @@ func TestParseLast(testing *testing.T) {
 	defer server.Close()
 
 	//when
-	stocks, err := ParseTodayStocks(server.URL)
+	stocks, err := parseTodayStocks(server.URL)
 
 	//then
 	if err != nil || len(stocks) == 0 {
@@ -29,7 +29,7 @@ func BenchmarkParseLast(b *testing.B) {
 	server := mockRssServer("stock_response.html")
 	defer server.Close()
 	for i:=0; i < b.N; i++ {
-		_, _ = ParseTodayStocks(server.URL)
+		_, _ = parseTodayStocks(server.URL)
 	}
 }
 

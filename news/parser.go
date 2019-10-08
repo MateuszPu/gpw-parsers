@@ -23,17 +23,17 @@ func open(url string) (io.ReadCloser, error) {
 	return resp.Body, err
 }
 
-func read(body io.ReadCloser, err error) ([]byte, error) {
+func read(body io.ReadCloser, err error) (*[]byte, error) {
 	content, err := ioutil.ReadAll(body)
 	if err != nil {
 		return nil, err
 	}
-	return content, err
+	return &content, err
 }
 
-func parse(content []byte, err error) (*Rss, error) {
+func parse(content *[]byte, err error) (*Rss, error) {
 	rss := &Rss{}
-	err = xml.Unmarshal(content, &rss)
+	err = xml.Unmarshal(*content, &rss)
 	return rss, err
 }
 

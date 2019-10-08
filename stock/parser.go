@@ -7,7 +7,11 @@ import (
 	"strings"
 )
 
-func ParseTodayStocks(url string) ([]Stock, error) {
+func parsTodayStocksDetails() {
+
+}
+
+func parseTodayStocks(url string) ([]Stock, error) {
 	var stocks []Stock
 	content, err := open(url)
 	if err != nil {
