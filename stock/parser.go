@@ -1,18 +1,39 @@
 package stock
 
 import (
+	"fmt"
 	"github.com/PuerkitoBio/goquery"
 	"io"
 	"net/http"
 	"strings"
 )
 
-func parsTodayStocksDetails() {
+const BASE_STOOQ_URL = "https://stooq.pl/t/?i=513&v=0&l=%d"
 
+func ParseTodayStocksDetails() ([]StockDetails, error){
+	return parseTodayStocksDetails(BASE_STOOQ_URL)
 }
 
-func parseTodayStocks(url string) ([]Stock, error) {
-	var stocks []Stock
+func parseTodayStocksDetails(pathUrl string) ([]StockDetails, error){
+	var result []StockDetails
+	page := 1
+	url := fmt.Sprintf(pathUrl, page)
+	stc, err := parseFrom(url)
+	result = append(result, stc...)
+	if err != nil {
+		return nil, err
+	}
+	for len(stc) > 0 {
+		page++
+		url = fmt.Sprintf(pathUrl, page)
+		stc, _ = parseFrom(url)
+		result = append(result, stc...)
+	}
+	return result, nil
+}
+
+func parseFrom(url string) ([]StockDetails, error) {
+	var stocks []StockDetails
 	content, err := open(url)
 	if err != nil {
 		return nil, err
@@ -27,7 +48,7 @@ func parseTodayStocks(url string) ([]Stock, error) {
 		ticker := strings.TrimSpace(s.Children().Eq(0).Text())
 		name := strings.TrimSpace(s.Children().Eq(1).Text())
 		price := strings.TrimSpace(s.Children().Eq(2).Text())
-		stock := Stock{ticker, name, price}
+		stock := StockDetails{ticker, name, price}
 		stocks = append(stocks, stock)
 	})
 	return stocks, nil
@@ -42,7 +63,7 @@ func open(url string) (io.ReadCloser, error) {
 	return resp.Body, err
 }
 
-type Stock struct {
+type StockDetails struct {
 	ticker string
 	name string
 	price string

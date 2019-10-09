@@ -2,12 +2,12 @@ package stock
 
 import "testing"
 
-func assertThat(actual Stock, testing *testing.T) stockAssertion {
+func assertThat(actual StockDetails, testing *testing.T) stockAssertion {
 	return stockAssertion{actual, testing}
 }
 
 type stockAssertion struct {
-	actual  Stock
+	actual  StockDetails
 	testing *testing.T
 }
 

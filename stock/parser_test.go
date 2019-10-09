@@ -1,19 +1,32 @@
 package stock
 
 import (
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 )
 
+//func TestParseReal(testing *testing.T) {
+//	//given
+//	//when
+//	stocks, err := ParseTodayStocksDetails()
+//
+//	//then
+//	if err != nil || len(stocks) == 0 {
+//		testing.Errorf("Ups something was wrong with parsing")
+//	}
+//}
+
 func TestParseLast(testing *testing.T) {
 	//given
-	server := mockRssServer("stock_response.html")
+	server := mockRssServer("stock_response_%d.html")
 	defer server.Close()
 
 	//when
-	stocks, err := parseTodayStocks(server.URL)
+	url := server.URL + "/%d"
+	stocks, err := parseTodayStocksDetails(url)
 
 	//then
 	if err != nil || len(stocks) == 0 {
@@ -26,17 +39,22 @@ func TestParseLast(testing *testing.T) {
 }
 
 func BenchmarkParseLast(b *testing.B) {
-	server := mockRssServer("stock_response.html")
+	server := mockRssServer("stock_response_1.html")
 	defer server.Close()
-	for i:=0; i < b.N; i++ {
-		_, _ = parseTodayStocks(server.URL)
+	for i := 0; i < b.N; i++ {
+		_, _ = parseFrom(server.URL + "/1")
 	}
 }
 
 func mockRssServer(path string) (*httptest.Server) {
-	bytes, _ := ioutil.ReadFile(path)
-	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	mux := http.NewServeMux()
+	mux.HandleFunc("/1", func(w http.ResponseWriter, r *http.Request) {
+		bytes, _ := ioutil.ReadFile(fmt.Sprintf(path, 1))
 		_, _ = w.Write(bytes)
-	}))
-	return server
+	})
+	mux.HandleFunc("/2", func(w http.ResponseWriter, r *http.Request) {
+		bytes, _ := ioutil.ReadFile(fmt.Sprintf(path, 2))
+		_, _ = w.Write(bytes)
+	})
+	return httptest.NewServer(mux)
 }
