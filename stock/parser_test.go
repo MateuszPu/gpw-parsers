@@ -42,11 +42,11 @@ func BenchmarkParseLast(b *testing.B) {
 	server := mockRssServer("stock_response_1.html")
 	defer server.Close()
 	for i := 0; i < b.N; i++ {
-		_, _ = parseFrom(server.URL + "/1")
+		parseFrom(server.URL + "/1", func(){})
 	}
 }
 
-func mockRssServer(path string) (*httptest.Server) {
+func mockRssServer(path string) *httptest.Server {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/1", func(w http.ResponseWriter, r *http.Request) {
 		bytes, _ := ioutil.ReadFile(fmt.Sprintf(path, 1))
