@@ -5,7 +5,6 @@ import (
 	"github.com/PuerkitoBio/goquery"
 	"net/http"
 	"strings"
-	"sync"
 )
 
 const BASE_STOOQ_URL = "https://stooq.pl/t/?i=513&v=0&l=%d"
@@ -15,25 +14,20 @@ func ParseTodayStocksDetails() ([]StockDetails, error) {
 }
 
 func parseTodayStocksDetails(pathUrl string) ([]StockDetails, error) {
-	var wg sync.WaitGroup
 	var result []StockDetails
 	page := 1
 	for {
-		wg.Add(1)
-		onExit := func() { wg.Done() }
-		parsedStockDetails := parseFrom(fmt.Sprintf(pathUrl, page), onExit)
+		parsedStockDetails := parseFrom(fmt.Sprintf(pathUrl, page))
 		if len(parsedStockDetails) == 0 {
 			break
 		}
 		result = append(result, parsedStockDetails...)
 		page++
 	}
-	wg.Wait()
 	return result, nil
 }
 
-func parseFrom(url string, onExit func()) []StockDetails {
-	defer onExit()
+func parseFrom(url string) []StockDetails {
 	response, err := http.Get(url)
 	if err != nil {
 		panic(err)

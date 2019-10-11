@@ -8,16 +8,16 @@ import (
 	"testing"
 )
 
-//func TestParseReal(testing *testing.T) {
-//	//given
-//	//when
-//	stocks, err := ParseTodayStocksDetails()
-//
-//	//then
-//	if err != nil || len(stocks) == 0 {
-//		testing.Errorf("Ups something was wrong with parsing")
-//	}
-//}
+func TestParseReal(testing *testing.T) {
+	//given
+	//when
+	stocks, err := ParseTodayStocksDetails()
+
+	//then
+	if err != nil || len(stocks) == 0 {
+		testing.Errorf("Ups something was wrong with parsing")
+	}
+}
 
 func TestParseLast(testing *testing.T) {
 	//given
@@ -42,7 +42,7 @@ func BenchmarkParseLast(b *testing.B) {
 	server := mockRssServer("stock_response_1.html")
 	defer server.Close()
 	for i := 0; i < b.N; i++ {
-		parseFrom(server.URL + "/1", func(){})
+		parseFrom(server.URL + "/1")
 	}
 }
 
