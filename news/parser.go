@@ -38,13 +38,13 @@ func parse(content *[]byte, err error) (*Rss, error) {
 }
 
 type Rss struct {
-	Type string `xml:"channel>title"`
+	Type  string `xml:"channel>title"`
 	Items []News `xml:"channel>item"`
 }
 
 type News struct {
-	Title string `xml:"title"`
-	Link string `xml:"link"`
+	Title   string `xml:"title"`
+	Link    string `xml:"link"`
 	Content string `xml:"encoded"`
-	Date string `xml:"pubDate"`
+	Date    string `xml:"pubDate"`
 }

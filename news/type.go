@@ -12,7 +12,7 @@ func (n news) Url() string {
 	return n.rssUrl
 }
 
-func Results() news{
+func Results() news {
 	return news{"http://biznes.pap.pl/pl/rss/6639"}
 }
 

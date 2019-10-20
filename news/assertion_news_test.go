@@ -18,7 +18,7 @@ func (assertion newsAssertion) hasTitle(title string) newsAssertion {
 	return assertion
 }
 
-func (assertion newsAssertion) hasLink(link string) newsAssertion{
+func (assertion newsAssertion) hasLink(link string) newsAssertion {
 	if assertion.news.Link != link {
 		assertion.testing.Errorf("Wrong link for news expected %s to be %s", assertion.news.Link, link)
 	}

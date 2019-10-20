@@ -37,7 +37,7 @@ func TestParsingForMockRssChannel(testing *testing.T) {
 func BenchmarkParseLast(b *testing.B) {
 	server, rssSource := mockRssServer("rss_response.xml")
 	defer server.Close()
-	for i:=0; i < b.N; i++ {
+	for i := 0; i < b.N; i++ {
 		_, _ = ParseLast(rssSource)
 	}
 }
@@ -57,4 +57,3 @@ type rssSource struct {
 func (m rssSource) Url() string {
 	return m.url
 }
-
