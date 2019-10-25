@@ -7,10 +7,12 @@ import (
 	"strings"
 )
 
-const BASE_STOOQ_URL = "https://stooq.pl/t/?i=513&v=0&l=%d"
+const baseStooqUrl = "https://stooq.pl/t/?i=513&v=0&l=%d"
 
+// func to parse all stock details for todays date
+// func should be call after warsaw stock exchange close
 func ParseTodayStocksDetails() ([]StockDetails, error) {
-	return parseTodayStocksDetails(BASE_STOOQ_URL)
+	return parseTodayStocksDetails(baseStooqUrl)
 }
 
 func parseTodayStocksDetails(pathUrl string) ([]StockDetails, error) {
